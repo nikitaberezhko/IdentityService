@@ -1,7 +1,7 @@
 using FluentValidation;
 using Services.Models.Request;
 
-namespace Services.Validation;
+namespace Services.Validation.Validators;
 
 public class AuthorizeUserValidator : AbstractValidator<AuthorizeUserModel>
 {

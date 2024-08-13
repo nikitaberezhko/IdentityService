@@ -1,7 +1,7 @@
 using FluentValidation;
 using Services.Models.Request;
 
-namespace Services.Validation;
+namespace Services.Validation.Validators;
 
 public class CreateUserValidator : AbstractValidator<CreateUserModel>
 {
@@ -11,7 +11,10 @@ public class CreateUserValidator : AbstractValidator<CreateUserModel>
 
         RuleFor(x => x.Password).NotEmpty();
 
-        RuleFor(x => x.RoleId).NotEmpty();
+        RuleFor(x => x.RoleId)
+            .GreaterThanOrEqualTo(1)
+            .LessThan(3)
+            .NotEmpty();
 
         RuleFor(x => x.Name).NotEmpty();
     }

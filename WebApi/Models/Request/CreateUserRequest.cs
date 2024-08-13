@@ -1,4 +1,4 @@
-namespace Identity.Contracts.Requests;
+namespace WebApi.Models.Request;
 
 public class CreateUserRequest
 {

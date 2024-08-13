@@ -33,7 +33,7 @@ public class UserRepository(DbContext context) : IUserRepository
     public async Task<User> GetByEmailAsync(User user)
     {
         var result = await context.Set<User>()
-            .FirstOrDefaultAsync(x => x.Email == user.Email && x.IsDeleted == false);
+            .FirstOrDefaultAsync(x => x.Email == user.Email && !x.IsDeleted);
         if (result != null)
             return result;
         
@@ -47,7 +47,7 @@ public class UserRepository(DbContext context) : IUserRepository
 
     public async Task<User> DeleteAsync(User user)
     {
-        var result = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == user.Id && x.IsDeleted == false);
+        var result = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == user.Id && !x.IsDeleted);
         if (result != null)
         {
             result.IsDeleted = true;

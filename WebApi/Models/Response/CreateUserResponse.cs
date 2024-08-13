@@ -1,4 +1,4 @@
-namespace Identity.Contracts.Responses;
+namespace WebApi.Models.Response;
 
 public class CreateUserResponse
 {

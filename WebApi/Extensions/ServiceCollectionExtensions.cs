@@ -3,8 +3,8 @@ using FluentValidation;
 using Infrastructure.JwtProvider;
 using Infrastructure.PasswordHasher;
 using Infrastructure.Repositories.Implementations;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Metrics;
 using Persistence.EntityFramework;
 using Services.Auth.Interfaces;
 using Services.Mapper;
@@ -13,7 +13,9 @@ using Services.Repositories.Interfaces;
 using Services.Services.Implementations;
 using Services.Services.Interfaces;
 using Services.Validation;
+using Services.Validation.Validators;
 using WebApi.Mapper;
+using ExceptionHandlerMiddleware = WebApi.Middlewares.ExceptionHandlerMiddleware;
 
 namespace WebApi.Extensions;
 
@@ -41,6 +43,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IValidator<AuthorizeUserModel>, AuthorizeUserValidator>();
         services.AddScoped<IValidator<CreateUserModel>, CreateUserValidator>();
         services.AddScoped<IValidator<DeleteUserModel>, DeleteUserValidator>();
+
+        services.AddScoped<UserValidator>();
 
         return services;
     }
@@ -99,6 +103,26 @@ public static class ServiceCollectionExtensions
             options.SubstituteApiVersionInUrl = true;
         });
 
+        return services;
+    }
+    
+    public static IServiceCollection AddTelemetry(this IServiceCollection services)
+    {
+        services.AddOpenTelemetry()
+            .WithMetrics(builder =>
+            {
+                builder.AddPrometheusExporter();
+
+                builder.AddMeter("Microsoft.AspNetCore.Hosting",
+                    "Microsoft.AspNetCore.Server.Kestrel");
+                builder.AddView("http.server.request.duration",
+                    new ExplicitBucketHistogramConfiguration
+                    {
+                        Boundaries = [ 0, 0.005, 0.01, 0.025, 0.05,
+                            0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10 ]
+                    });
+            });
+        
         return services;
     }
 }

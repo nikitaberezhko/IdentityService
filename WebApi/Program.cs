@@ -1,6 +1,4 @@
 using Infrastructure.Settings;
-using Microsoft.EntityFrameworkCore;
-using Persistence.EntityFramework;
 using WebApi.Extensions;
 using WebApi.Middlewares;
 
@@ -27,6 +25,7 @@ public class Program
         services.AddAuthServices();
         services.AddRepositories();
         services.AddExceptionHandling();
+        services.AddTelemetry();
 
         var app = builder.Build();
 
@@ -36,6 +35,8 @@ public class Program
         app.UseSwaggerUI();
         
         app.UseHttpsRedirection();
+
+        app.MapPrometheusScrapingEndpoint();
 
         app.MapControllers();
         app.Run();

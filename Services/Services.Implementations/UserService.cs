@@ -8,6 +8,7 @@ using Services.Models.Request;
 using Services.Models.Response;
 using Services.Repositories.Interfaces;
 using Services.Services.Interfaces;
+using Services.Validation;
 
 namespace Services.Services.Implementations;
 
@@ -16,24 +17,13 @@ public class UserService(
     IUserRepository userRepository,
     IJwtProvider jwtProvider,
     IPasswordHasher passwordHasher,
-    IValidator<CreateUserModel> createUserValidator,
-    IValidator<DeleteUserModel> deleteUserValidator,
-    IValidator<AuthorizeUserModel> authorizeUserValidator,
-    IValidator<AuthenticateUserModel> authenticateUserValidator) : IUserService
+    UserValidator userValidator) : IUserService
 {
     public async Task<Guid> Create(CreateUserModel model)
     {
-        var validationResult = await createUserValidator.ValidateAsync(model);
-        if (!validationResult.IsValid)
-            throw new ServiceException
-            {
-                Title = "Validation failed",
-                Message = $"User with this fields failed validation",
-                StatusCode = StatusCodes.Status400BadRequest
-            };
-
-        var user = mapper.Map<User>(model);
+        await userValidator.ValidateAsync(model);
         
+        var user = mapper.Map<User>(model);
         user.Password = passwordHasher.GenerateHash(user.Password);
         
         return await userRepository.AddAsync(user);
@@ -41,19 +31,14 @@ public class UserService(
 
     public async Task<string> Authenticate(AuthenticateUserModel model)
     {
-        var validationResult = await authenticateUserValidator.ValidateAsync(model);
-        if (!validationResult.IsValid)
-            throw new ServiceException
-            {
-                Title = "Validation failed",
-                Message = $"User with this fields failed validation",
-                StatusCode = StatusCodes.Status400BadRequest
-            };
+        await userValidator.ValidateAsync(model);
 
         var user = mapper.Map<User>(model);
         var result = await userRepository.GetByEmailAsync(user);
         
-        if (passwordHasher.VerifyHash(user.Password, result.Password) == false)
+        if (passwordHasher.VerifyHash(
+                password: user.Password, 
+                hash: result.Password) == false)
             throw new ServiceException
             {
                 Title = "Authentication failed",
@@ -67,17 +52,9 @@ public class UserService(
 
     public async Task<UserModel> Authorize(AuthorizeUserModel model)
     {
-        var validationResult = await authorizeUserValidator.ValidateAsync(model);
-        if (!validationResult.IsValid)
-            throw new ServiceException
-            {
-                Title = "Validation failed",
-                Message = $"User with this fields failed validation",
-                StatusCode = StatusCodes.Status400BadRequest
-            };
+        await userValidator.ValidateAsync(model);
 
         var user = jwtProvider.VerifyToken(model.Token);
-        
         var result = new UserModel
         {
             Id = user.Id,
@@ -88,18 +65,11 @@ public class UserService(
 
     public async Task<UserModel> Delete(DeleteUserModel model)
     {
-        var validationResult = await deleteUserValidator.ValidateAsync(model);
-        if (!validationResult.IsValid)
-            throw new ServiceException
-            {
-                Title = "Validation failed",
-                Message = $"User with this fields failed validation",
-                StatusCode = StatusCodes.Status400BadRequest
-            };
-
+        await userValidator.ValidateAsync(model);
+        
         var user = await userRepository.DeleteAsync(mapper.Map<User>(model));
-
         var result = mapper.Map<UserModel>(user);
+        
         return result;
     }
 }

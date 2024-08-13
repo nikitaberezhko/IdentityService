@@ -23,13 +23,13 @@ public class JwtProvider(IOptions<JwtOptions> jwtOptions) : IJwtProvider
             new("roleId", user.RoleId.ToString())
         ];
 
-        var signingCredential = new SigningCredentials(
+        var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey)),
             SecurityAlgorithms.HmacSha256);
         
         var token = new JwtSecurityToken(
             claims: claims,
-            signingCredentials: signingCredential,
+            signingCredentials: signingCredentials,
             issuer: _jwtOptions.Issuer,
             expires: DateTime.UtcNow.AddHours(_jwtOptions.Expiration)
         );

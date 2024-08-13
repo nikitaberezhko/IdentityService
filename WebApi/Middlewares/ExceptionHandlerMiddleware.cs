@@ -1,6 +1,7 @@
 using Exceptions.Infrastructure;
 using Exceptions.Services;
 using WebApi.Models;
+using WebApi.Models.CommonResponse;
 
 namespace WebApi.Middlewares;
 
@@ -35,7 +36,7 @@ public class ExceptionHandlerMiddleware(ILogger<ExceptionHandlerMiddleware> logg
         }
         catch (Exception e)
         {
-            logger.LogError(e, e.Message);
+            logger.LogCritical(e, e.Message);
             
             await InterceptResponseAsync(context,
                 "Unknown server error", 
