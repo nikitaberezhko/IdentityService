@@ -1,7 +1,6 @@
-using Exceptions.Infrastructure;
-using Exceptions.Services;
-using WebApi.Models;
-using WebApi.Models.CommonResponse;
+using CommonModel.Contracts;
+using Exceptions.Contracts.Infrastructure;
+using Exceptions.Contracts.Services;
 
 namespace WebApi.Middlewares;
 

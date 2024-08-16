@@ -1,4 +1,4 @@
-using Exceptions.Services;
+using Exceptions.Contracts.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Services.Models.Request;

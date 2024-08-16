@@ -1,12 +1,11 @@
 using Asp.Versioning;
 using AutoMapper;
+using CommonModel.Contracts;
+using IdentityService.Contracts.Request;
+using IdentityService.Contracts.Response;
 using Microsoft.AspNetCore.Mvc;
 using Services.Models.Request;
 using Services.Services.Interfaces;
-using WebApi.Models;
-using WebApi.Models.CommonResponse;
-using WebApi.Models.Request;
-using WebApi.Models.Response;
 
 namespace WebApi.Controllers;
 

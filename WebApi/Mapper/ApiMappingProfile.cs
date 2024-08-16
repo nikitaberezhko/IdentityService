@@ -1,8 +1,8 @@
 using AutoMapper;
+using IdentityService.Contracts.Request;
+using IdentityService.Contracts.Response;
 using Services.Models.Request;
 using Services.Models.Response;
-using WebApi.Models.Request;
-using WebApi.Models.Response;
 
 namespace WebApi.Mapper;
 

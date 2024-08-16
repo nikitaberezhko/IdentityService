@@ -1,5 +1,5 @@
 using Domain;
-using Exceptions.Infrastructure;
+using Exceptions.Contracts.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Services.Repositories.Interfaces;
@@ -37,7 +37,7 @@ public class UserRepository(DbContext context) : IUserRepository
         if (result != null)
             return result;
         
-        throw new InfrastructureException()
+        throw new InfrastructureException
         {
             Title = "User not found",
             Message = $"User with this login not found",

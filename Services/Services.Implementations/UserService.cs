@@ -1,7 +1,6 @@
 using AutoMapper;
 using Domain;
-using Exceptions.Services;
-using FluentValidation;
+using Exceptions.Contracts.Services;
 using Microsoft.AspNetCore.Http;
 using Services.Auth.Interfaces;
 using Services.Models.Request;
