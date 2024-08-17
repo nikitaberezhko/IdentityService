@@ -60,7 +60,7 @@ public class DeleteModelValidationTests
     
     private UserValidator CreateUserValidatorForDeleteModel() =>
         new(new Mock<IValidator<CreateUserModel>>().Object,
-            ProviderCreator.Get<IValidator<DeleteUserModel>>(),
+            Provider.Get<IValidator<DeleteUserModel>>(),
             new Mock<IValidator<AuthorizeUserModel>>().Object,
             new Mock<IValidator<AuthenticateUserModel>>().Object);
 }

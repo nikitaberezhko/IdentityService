@@ -172,7 +172,7 @@ public class CreateModelValidationTests
 
 
     private UserValidator CreateUserValidatorForCreateModel() =>
-        new(ProviderCreator.Get<IValidator<CreateUserModel>>(),
+        new(Provider.Get<IValidator<CreateUserModel>>(),
             new Mock<IValidator<DeleteUserModel>>().Object,
             new Mock<IValidator<AuthorizeUserModel>>().Object,
             new Mock<IValidator<AuthenticateUserModel>>().Object);

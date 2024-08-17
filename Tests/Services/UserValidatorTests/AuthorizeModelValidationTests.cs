@@ -45,6 +45,6 @@ public class AuthorizeModelValidationTests
     private UserValidator CreateUserValidatorForAuthorizeModel() =>
         new(new Mock<IValidator<CreateUserModel>>().Object,
             new Mock<IValidator<DeleteUserModel>>().Object,
-            ProviderCreator.Get<IValidator<AuthorizeUserModel>>(),
+            Provider.Get<IValidator<AuthorizeUserModel>>(),
             new Mock<IValidator<AuthenticateUserModel>>().Object);
 }

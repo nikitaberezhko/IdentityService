@@ -82,5 +82,5 @@ public class AuthenticateModelValidationTests
         new(new Mock<IValidator<CreateUserModel>>().Object,
             new Mock<IValidator<DeleteUserModel>>().Object,
             new Mock<IValidator<AuthorizeUserModel>>().Object,
-            ProviderCreator.Get<IValidator<AuthenticateUserModel>>());
+            Provider.Get<IValidator<AuthenticateUserModel>>());
 }

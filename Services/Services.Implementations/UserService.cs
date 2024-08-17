@@ -24,8 +24,9 @@ public class UserService(
         
         var user = mapper.Map<User>(model);
         user.Password = passwordHasher.GenerateHash(user.Password);
-        
-        return await userRepository.AddAsync(user);
+        var id = await userRepository.AddAsync(user);
+
+        return id;
     }
 
     public async Task<string> Authenticate(AuthenticateUserModel model)
