@@ -121,7 +121,7 @@ public class CreateModelValidationTests
             Email = "good@mail.com",
             Password = "password",
             Name = "somename",
-            Phone = "+123456789"
+            Phone = "+123456789m"
         };
 
         // Act
