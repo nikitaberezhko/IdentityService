@@ -9,7 +9,9 @@ public class CreateUserValidator : AbstractValidator<CreateUserModel>
     {
         RuleFor(x => x.Email).EmailAddress();
 
-        RuleFor(x => x.Password).NotEmpty();
+        RuleFor(x => x.Password)
+            .NotEmpty()
+            .MinimumLength(6);
 
         RuleFor(x => x.RoleId)
             .GreaterThanOrEqualTo(1)
@@ -17,5 +19,9 @@ public class CreateUserValidator : AbstractValidator<CreateUserModel>
             .NotEmpty();
 
         RuleFor(x => x.Name).NotEmpty();
+
+        RuleFor(x => x.Phone)
+            .NotEmpty()
+            .Must(x => !x.Any(c => !char.IsDigit(c) && c != '+'));
     }
 }

@@ -11,32 +11,40 @@ public class UserValidator(
     IValidator<AuthorizeUserModel> authorizeUserValidator,
     IValidator<AuthenticateUserModel> authenticateUserValidator)
 {
-    public async Task ValidateAsync(CreateUserModel model)
+    public async Task<bool> ValidateAsync(CreateUserModel model)
     {
         var validationResult = await createUserValidator.ValidateAsync(model);
         if (!validationResult.IsValid)
             ThrowWithStandartErrorMessage();
+        
+        return true;
     }
     
-    public async Task ValidateAsync(DeleteUserModel model)
+    public async Task<bool> ValidateAsync(DeleteUserModel model)
     {
         var validationResult = await deleteUserValidator.ValidateAsync(model);
         if (!validationResult.IsValid)
             ThrowWithStandartErrorMessage();
+        
+        return true;
     }
     
-    public async Task ValidateAsync(AuthorizeUserModel model)
+    public async Task<bool> ValidateAsync(AuthorizeUserModel model)
     {
         var validationResult = await authorizeUserValidator.ValidateAsync(model);
         if (!validationResult.IsValid)
             ThrowWithStandartErrorMessage();
+        
+        return true;
     }
     
-    public async Task ValidateAsync(AuthenticateUserModel model)
+    public async Task<bool> ValidateAsync(AuthenticateUserModel model)
     {
         var validationResult = await authenticateUserValidator.ValidateAsync(model);
         if (!validationResult.IsValid)
             ThrowWithStandartErrorMessage();
+        
+        return true;
     }
 
     private void ThrowWithStandartErrorMessage()
