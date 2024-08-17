@@ -37,6 +37,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+      - name: Add Github Source
+        run: dotnet nuget add source https://nuget.pkg.github.com/nikitaberezhko/index.json --name github  --username nikitaberezhko --password ${{secrets.PACKAGE_REGISTRY_PAT}} --store-password-in-clear-text
+      - name: Restore dependencies
+        run: dotnet restore
       - name: Test
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test
       
