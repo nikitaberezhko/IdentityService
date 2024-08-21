@@ -10,7 +10,7 @@ namespace Tests.Services.UserValidatorTests;
 public class AuthorizeModelValidationTests
 {
     [Fact]
-    public async Task AuthorizeModel_MustBeValid()
+    public async Task ValidateAsync_Should_Be_Valid_With_Valid_Model()
     {
         // Arrange
         var validator = CreateUserValidatorForAuthorizeModel();
@@ -27,7 +27,7 @@ public class AuthorizeModelValidationTests
     }
     
     [Fact]
-    public async Task AuthorizeModel_MustThrowBecauseTokenIsEmpty()
+    public async Task ValidateAsync_Should_Throw_ServiceException_If_Token_Is_Empty()
     {
         // Arrange
         var validator = CreateUserValidatorForAuthorizeModel();

@@ -14,7 +14,7 @@ namespace Tests.Services.UserServiceTests;
 public class AuthorizeUserCasesTests
 {
     [Fact]
-    public async Task AuthorizeUser_MustReturnRightIdAndRoleId()
+    public async Task AuthorizeCase_Should_Return_Right_Id_And_RoleId()
     {
         // Arrange
         var user = new User
@@ -44,7 +44,7 @@ public class AuthorizeUserCasesTests
     }
     
     [Fact]
-    public async Task AuthorizeUser_MustThrowBecauseTokenIsInvalid()
+    public async Task AuthorizeCase_Should_Throw_InfrastructureException_If_Token_Is_Invalid()
     {
         // Arrange
         var user = new User

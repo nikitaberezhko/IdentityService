@@ -14,7 +14,7 @@ namespace Tests.Services.UserServiceTests;
 public class AuthenticateUserCasesTests
 {
     [Fact]
-    public async Task AuthenticateModel_MustReturnToken()
+    public async Task AuthenticateCase_Should_Return_Token()
     {
         // Arrange
         var password = "password";
@@ -50,7 +50,7 @@ public class AuthenticateUserCasesTests
     }
 
     [Fact]
-    public async Task AuthenticateModel_MustThrowBecausePasswordIsWrong()
+    public async Task AuthenticateCase_Should_Throw_ServiceException_If_Password_Is_Wrong()
     {
         // Arrange
         var password = "password";

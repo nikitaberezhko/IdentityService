@@ -13,7 +13,7 @@ namespace Tests.Services.UserServiceTests;
 public class CreateUserCasesTests
 {
     [Fact]
-    public async Task CreateModel_MustReturnCreatedUserId()
+    public async Task CreateCase_Should_Return_Created_UserId()
     {
         // Arrange
         var service = CreateUserServiceForCreateCase();

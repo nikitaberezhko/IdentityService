@@ -10,7 +10,7 @@ namespace Tests.Services.UserValidatorTests;
 public class DeleteModelValidationTests
 {
     [Fact]
-    public async Task DeleteModel_MustBeValid()
+    public async Task ValidateAsync_Should_Be_Valid_With_Valid_Model()
     {
         // Arrange
         var validator = CreateUserValidatorForDeleteModel();
@@ -27,7 +27,7 @@ public class DeleteModelValidationTests
     }
 
     [Fact]
-    public async Task DeleteModel_MustThrowBecauseIdIsEmpty()
+    public async Task ValidateAsync_Should_Throw_ServiceException_If_Id_Is_Empty()
     {
         // Arrange
         var validator = CreateUserValidatorForDeleteModel();
@@ -43,7 +43,7 @@ public class DeleteModelValidationTests
     }
 
     [Fact]
-    public async Task Delete_MustThrowBecauseIdIsInvalid()
+    public async Task ValidateAsync_Should_Throw_ServiceException_If_Id_Is_Invalid()
     {
         // Arrange
         var validator = CreateUserValidatorForDeleteModel();

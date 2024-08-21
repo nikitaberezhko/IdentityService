@@ -10,7 +10,7 @@ namespace Tests.Services.UserValidatorTests;
 public class AuthenticateModelValidationTests
 {
     [Fact]
-    public async Task AuthenticateModel_MustBeValid()
+    public async Task ValidateAsync_Should_Be_Valid_With_Valid_Model()
     {
         // Arrange
         var validator = CreateUserValidatorForAuthenticateModel();
@@ -28,7 +28,7 @@ public class AuthenticateModelValidationTests
     }
 
     [Fact]
-    public async Task AuthenticateModel_MustThrowBecauseEmailIsInvalid()
+    public async Task ValidateAsync_Should_Throw_ServiceException_If_Email_Is_Invalid()
     {
         // Arrange
         var validator = CreateUserValidatorForAuthenticateModel();
@@ -45,7 +45,7 @@ public class AuthenticateModelValidationTests
     }
 
     [Fact]
-    public async Task AuthenticateModel_MustThrowBecausePasswordIsEmpty()
+    public async Task ValidateAsync_Should_Throw_ServiceException_If_Password_Is_Empty()
     {
         // Arrange
         var validator = CreateUserValidatorForAuthenticateModel();
@@ -62,7 +62,7 @@ public class AuthenticateModelValidationTests
     }
     
     [Fact]
-    public async Task AuthenticateModel_MustThrowBecausePasswordLengthIsInvalid()
+    public async Task ValidateAsync_Should_Throw_ServiceException_If_Password_Length_Is_Invalid()
     {
         // Arrange
         var validator = CreateUserValidatorForAuthenticateModel();

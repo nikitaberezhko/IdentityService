@@ -13,7 +13,7 @@ namespace Tests.Services.UserServiceTests;
 public class DeleteUserCasesTests
 {
     [Fact]
-    public async Task DeleteModel_MustReturnEqualId()
+    public async Task DeleteCase_Should_Return_Equal_Id()
     {
         // Arrange
         var id = Guid.NewGuid();
