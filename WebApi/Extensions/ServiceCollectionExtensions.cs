@@ -6,6 +6,7 @@ using Infrastructure.Repositories.Implementations;
 using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Metrics;
 using Persistence.EntityFramework;
+using Serilog;
 using Services.Auth.Interfaces;
 using Services.Mapper;
 using Services.Models.Request;
@@ -84,6 +85,16 @@ public static class ServiceCollectionExtensions
     {
         services.AddTransient<ExceptionHandlerMiddleware>();
         
+        return services;
+    }
+    
+    public static IServiceCollection ConfigureSerilog(this IServiceCollection services)
+    {
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .CreateLogger();
+        services.AddSerilog();
+
         return services;
     }
     
