@@ -2,16 +2,16 @@
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
+EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["WebApi/WebApi.csproj", "WebApi/"]
-COPY ["Persistence/Persistence.csproj", "Persistence/"]
-COPY ["Domain/Domain.csproj", "Domain/"]
 COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
-COPY ["Exceptions/Exceptions.csproj", "Exceptions/"]
+COPY ["Domain/Domain.csproj", "Domain/"]
 COPY ["Services/Services.csproj", "Services/"]
+COPY ["Persistence/Persistence.csproj", "Persistence/"]
 RUN dotnet restore "WebApi/WebApi.csproj"
 COPY . .
 WORKDIR "/src/WebApi"

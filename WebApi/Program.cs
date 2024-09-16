@@ -10,6 +10,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         var services = builder.Services;
+        builder.AddSerilog();
 
         services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
         
