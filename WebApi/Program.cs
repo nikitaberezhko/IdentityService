@@ -1,4 +1,5 @@
 using Infrastructure.Settings;
+using SerilogTracing;
 using WebApi.Extensions;
 using WebApi.Middlewares;
 
@@ -10,6 +11,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         var services = builder.Services;
+        using var listener = new ActivityListenerConfiguration()
+            .TraceToSharedLogger();
 
         services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
         
@@ -26,7 +29,7 @@ public class Program
         services.AddRepositories();
         services.AddExceptionHandling();
         services.AddTelemetry();
-        services.ConfigureSerilog();
+        services.ConfigureSerilogAndZipkinTracing(builder.Configuration);
 
         var app = builder.Build();
 

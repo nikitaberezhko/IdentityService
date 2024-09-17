@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Metrics;
 using Persistence.EntityFramework;
 using Serilog;
+using SerilogTracing;
 using Services.Auth.Interfaces;
 using Services.Mapper;
 using Services.Models.Request;
@@ -16,6 +17,7 @@ using Services.Services.Interfaces;
 using Services.Validation;
 using Services.Validation.Validators;
 using WebApi.Mapper;
+using WebApi.Settings;
 using ExceptionHandlerMiddleware = WebApi.Middlewares.ExceptionHandlerMiddleware;
 
 namespace WebApi.Extensions;
@@ -88,13 +90,19 @@ public static class ServiceCollectionExtensions
         return services;
     }
     
-    public static IServiceCollection ConfigureSerilog(this IServiceCollection services)
+    public static IServiceCollection ConfigureSerilogAndZipkinTracing(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
+        var settings = configuration.GetSection("ZipkinSettings").Get<ZipkinSettings>();
+        
         Log.Logger = new LoggerConfiguration()
+            .Enrich.WithProperty("Application", "IdentityService")
             .WriteTo.Console()
+            .WriteTo.Zipkin(settings!.Endpoint)
             .CreateLogger();
         services.AddSerilog();
-
+        
         return services;
     }
     
